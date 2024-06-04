@@ -9,7 +9,7 @@ import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
-public class Player implements Collideable, Destroyable, KeyboardHandler {
+public class Player implements Collideable, KeyboardHandler {
     private Weapon weapon;
 
     private boolean isDead;
@@ -105,6 +105,12 @@ public class Player implements Collideable, Destroyable, KeyboardHandler {
         }
     }
 
+    @Override
+    public Picture getPicture() {
+        return characterImage;
+    }
+
+
     public void jump() {
         if (this.isComingDown) {
             this.characterImage.translate(0, this.movementSpeed);
@@ -131,15 +137,6 @@ public class Player implements Collideable, Destroyable, KeyboardHandler {
         this.characterImage.translate(0, -movementSpeed);
     }
 
-    @Override
-    public void setCollided() {
-        this.collided = true;
-    }
-
-    @Override
-    public boolean getCollided() {
-        return this.collided;
-    }
 
     @Override
     public void kill() {

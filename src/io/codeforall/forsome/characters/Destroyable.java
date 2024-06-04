@@ -6,6 +6,7 @@ public interface Destroyable {
 
     void kill();
     boolean isDead();
+    void show();
 
 
 }

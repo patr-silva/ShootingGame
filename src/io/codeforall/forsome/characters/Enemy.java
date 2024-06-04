@@ -4,7 +4,7 @@ import io.codeforall.forsome.Collideable;
 import io.codeforall.forsome.grid.Grid;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
-public abstract class Enemy implements Destroyable, Collideable {
+public abstract class Enemy implements Collideable {
 
     private Grid grid;
     private Picture image;
@@ -20,7 +20,8 @@ public abstract class Enemy implements Destroyable, Collideable {
         this.speed = speed;
         this.grid = grid;
         this.image = new Picture();
-        //load picture
+        this.image.load("src/io/codeforall/forsome/characters/images/floppagun.png");
+        this.image.translate(this.getSpawnXPosition(), this.getSpawnYPosition());
     }
 
     public int getSpawnYPosition() {
@@ -32,12 +33,9 @@ public abstract class Enemy implements Destroyable, Collideable {
         return this.grid.getWidth() - this.image.getWidth();
     }
 
-    public void drawEnemy() {
-        this.image.load("src/io/codeforall/forsome/characters/images/floppagun.png");
-        this.image.translate(this.getSpawnXPosition(), this.getSpawnYPosition());
-        // this.image.translate(300, 300);
+    @Override
+    public void show() {
         this.image.draw();
-
     }
 
     public void takeDamage(int hit) {
@@ -58,6 +56,11 @@ public abstract class Enemy implements Destroyable, Collideable {
 
     public boolean isArmoured() {
         return this.isArmoured;
+    }
+
+    @Override
+    public Picture getPicture() {
+        return this.image;
     }
 
     @Override
