@@ -1,12 +1,8 @@
 package io.codeforall.forsome;
 
-public interface Collideable {
-    boolean hasCollided = false;
+import io.codeforall.forsome.characters.Destroyable;
 
-    void setCollided();
-
-    boolean getCollided();
-
+public interface Collideable extends Destroyable {
 
     void move();
 }
