@@ -13,42 +13,48 @@ public class CollideableManager {
         collideablesList.add(collideable);
     }
 
+    public static void removeCollideable(Collideable collideable) {
+        collideablesList.remove(collideable);
+    }
+
     public static void detectCollisions() {
-        for(Collideable c : collideablesList) {
+        for (Collideable c : collideablesList) {
             // player collisions
-            if(c instanceof Player) {
+            if (c instanceof Player) {
                 // compare player position with other collideables
-                for(Collideable other : collideablesList) {
+                for (Collideable other : collideablesList) {
                     //exclude player
-                    if(c.equals(other)) {
+                    if (c.equals(other)) {
                         continue;
                     }
 
-                    if(other instanceof Enemy) {
-                        if(comparePositions(c,other)) {
-                            System.out.println("Colidiu");
+                    if (other instanceof Enemy) {
+                        if (comparePositions(c, other)) {
+                            System.out.println("saiu");
                         }
                     }
                 }
             }
 
             // enemy collisions
-            if(c instanceof Enemy) {
+            if (c instanceof Enemy) {
                 if (c.getPicture().getMaxX() - c.getPicture().getWidth() / 2 <= 0) {
-                    System.out.println("Sumiu cara");
+                    Game.score -= ((Enemy) c).getScoreDeduction();
+                    c.getPicture().delete();
+                    removeCollideable(c);
                 }
             }
         }
     }
 
     public static void show() {
-        for(Collideable c : collideablesList) {
+        for (Collideable c : collideablesList) {
             c.show();
         }
     }
 
     public static void move() {
-        for(Collideable c : collideablesList) {
+        for (Collideable c : collideablesList) {
             c.move();
         }
     }

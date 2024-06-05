@@ -1,6 +1,7 @@
 package io.codeforall.forsome.characters;
 
 import io.codeforall.forsome.Collideable;
+import io.codeforall.forsome.Game;
 import io.codeforall.forsome.grid.Grid;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
@@ -14,14 +15,24 @@ public abstract class Enemy implements Collideable {
     private boolean isDead;
     private int speed;
 
+    private int scoreDeduction;
+    private int scoreIncremented;
 
-    public Enemy(int health, int speed, Grid grid) {
+
+    public Enemy(int health, int speed, Grid grid, int scoreDeduction, int scoreIncremented) {
         this.health = health;
         this.speed = speed;
         this.grid = grid;
         this.image = new Picture();
         this.image.load("src/io/codeforall/forsome/characters/images/floppagun.png");
         this.image.translate(this.getSpawnXPosition(), this.getSpawnYPosition());
+        this.scoreDeduction = scoreDeduction;
+        this.scoreIncremented = scoreIncremented;
+    }
+
+    public Enemy(int health, Grid grid) {
+        this.health = health;
+        this.grid = grid;
     }
 
     public int getSpawnYPosition() {
@@ -38,10 +49,13 @@ public abstract class Enemy implements Collideable {
         this.image.draw();
     }
 
+    //Bullet damage
     public void takeDamage(int hit) {
         this.health -= hit;
         System.out.println("Enemy health: " + this.health);
         if (this.health <= 0) {
+            this.isDead = true;
+            Game.score += scoreIncremented;
             this.kill();
         }
     }
@@ -58,6 +72,14 @@ public abstract class Enemy implements Collideable {
         return this.isArmoured;
     }
 
+    public int getScoreDeduction(){
+        return this.scoreDeduction;
+    }
+
+    public int getScoreIncremented(){
+        return this.scoreIncremented;
+    }
+
     @Override
     public Picture getPicture() {
         return this.image;
@@ -66,6 +88,10 @@ public abstract class Enemy implements Collideable {
     @Override
     public boolean isDead() {
         return this.isDead;
+    }
+
+    public void kill(){
+        System.out.println("Enemy killed");
     }
 
     @Override
