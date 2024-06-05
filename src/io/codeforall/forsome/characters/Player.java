@@ -1,6 +1,7 @@
 package io.codeforall.forsome.characters;
 
 import io.codeforall.forsome.Collideable;
+import io.codeforall.forsome.CollideableManager;
 import io.codeforall.forsome.grid.Grid;
 import io.codeforall.forsome.weapons.Weapon;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
@@ -37,6 +38,7 @@ public class Player implements Collideable, KeyboardHandler {
 
     public Player(Grid grid) {
         this.keyboard = new Keyboard(this);
+        CollideableManager.addCollideable(this);
         addKeyboard();
 
         this.movementSpeed = 25;

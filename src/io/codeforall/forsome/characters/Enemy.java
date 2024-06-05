@@ -1,6 +1,7 @@
 package io.codeforall.forsome.characters;
 
 import io.codeforall.forsome.Collideable;
+import io.codeforall.forsome.CollideableManager;
 import io.codeforall.forsome.grid.Grid;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 

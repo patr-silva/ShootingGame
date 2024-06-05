@@ -13,6 +13,18 @@ public class CollideableManager {
         collideablesList.add(collideable);
     }
 
+    public static void removeCollideable(Collideable collideable) {
+        collideablesList.remove(collideable);
+    }
+
+    public static void clearCollideableList() {
+        for (Collideable c : collideablesList) {
+            c.getPicture().delete();
+        }
+
+        collideablesList.clear();
+    }
+
     public static void detectCollisions() {
         for(Collideable c : collideablesList) {
             // player collisions
@@ -26,7 +38,7 @@ public class CollideableManager {
 
                     if(other instanceof Enemy) {
                         if(comparePositions(c,other)) {
-                            System.out.println("Colidiu");
+                            c.kill();
                         }
                     }
                 }
@@ -35,7 +47,7 @@ public class CollideableManager {
             // enemy collisions
             if(c instanceof Enemy) {
                 if (c.getPicture().getMaxX() - c.getPicture().getWidth() / 2 <= 0) {
-                    System.out.println("Sumiu cara");
+                    System.out.println(collideablesList);
                 }
             }
         }
