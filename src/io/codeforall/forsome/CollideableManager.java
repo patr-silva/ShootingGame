@@ -2,6 +2,8 @@ package io.codeforall.forsome;
 
 import io.codeforall.forsome.characters.Enemy;
 import io.codeforall.forsome.characters.Player;
+import io.codeforall.forsome.grid.Grid;
+import io.codeforall.forsome.weapons.Bullet;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 import java.util.LinkedList;
@@ -14,8 +16,10 @@ public class CollideableManager {
     }
 
     public static void removeCollideable(Collideable collideable) {
-        collideablesList.remove(collideable);
+        collideable.getPicture().delete();
+        //collideablesList.remove(collideable);
     }
+
     public static void clearCollideableList() {
         for (Collideable c : collideablesList) {
             c.getPicture().delete();
@@ -23,45 +27,81 @@ public class CollideableManager {
 
         collideablesList.clear();
     }
-    public static void detectCollisions() {
+    public static void detectCollisions(Grid grid) {
         for(Collideable c : collideablesList) {
-            // player collisions
-            if(c instanceof Player) {
-                // compare player position with other collideables
-                for(Collideable other : collideablesList) {
-                    //exclude player
-                    if(c.equals(other)) {
+            if(!c.isDead()) {
+                // player collisions
+                if(c instanceof Player) {
+                    // compare player position with other collideables
+                    for(Collideable other : collideablesList) {
+                        //exclude player
+                        if(c.equals(other)) {
+                            continue;
+                        }
+
+                        if(other instanceof Enemy) {
+                            if(comparePositions(c,other)) {
+                                c.kill();
+                            }
+                        }
+                    }
+                    continue;
+                }
+
+                // enemy collisions
+                if (c instanceof Enemy) {
+                    if (c.getPicture().getMaxX() - c.getPicture().getWidth() / 2 <= 0) {
+                        Game.score -= ((Enemy) c).getScoreDeduction();
+                        c.kill();
+                        removeCollideable(c);
                         continue;
                     }
 
-                    if(other instanceof Enemy) {
-                        if(comparePositions(c,other)) {
-                            c.kill();
+                }
+
+                // bullet collisions
+                if (c instanceof Bullet) {
+                    if (c.getPicture().getMaxX() - c.getPicture().getWidth() / 2 >= grid.getWidth()) {
+                        c.kill();
+                        removeCollideable(c);
+                    }
+
+                    for(Collideable other : collideablesList) {
+                        //exclude player
+                        if(c.equals(other)) {
+                            continue;
+                        }
+
+                        if(other instanceof Enemy) {
+                            if(comparePositions(other,c)) {
+                                System.out.println("entrou");
+                                ((Enemy) other).takeDamage(((Bullet) c).getDamage());
+                                c.kill();
+                                removeCollideable(other);
+                                break;
+                            }
                         }
                     }
                 }
             }
 
-            // enemy collisions
-            if (c instanceof Enemy) {
-                if (c.getPicture().getMaxX() - c.getPicture().getWidth() / 2 <= 0) {
-                    Game.score -= ((Enemy) c).getScoreDeduction();
-                    c.getPicture().delete();
-                    removeCollideable(c);
-                }
-            }
+
         }
     }
 
     public static void show() {
         for(Collideable c : collideablesList) {
-            c.show();
+            if(!c.isDead()) {
+                c.show();
+            }
         }
     }
 
     public static void move() {
         for(Collideable c : collideablesList) {
-            c.move();
+            if (!c.isDead()) {
+                c.move();
+            }
         }
     }
 

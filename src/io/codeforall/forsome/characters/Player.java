@@ -4,6 +4,7 @@ import io.codeforall.forsome.Collideable;
 import io.codeforall.forsome.CollideableManager;
 import io.codeforall.forsome.grid.Grid;
 import io.codeforall.forsome.weapons.Weapon;
+import io.codeforall.forsome.weapons.WeaponFactory;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
@@ -25,7 +26,7 @@ public class Player implements Collideable, KeyboardHandler {
     private boolean isMovingRight;
     private boolean isMovingLeft;
 
-    private final int MAXJUMPHEIGHT = 250;
+    private final int MAXJUMPHEIGHT = 350;
     private final int MAXJUMPS = 2;
     private int activeJumps;
     private int initialJumpPosition;
@@ -41,7 +42,8 @@ public class Player implements Collideable, KeyboardHandler {
         CollideableManager.addCollideable(this);
         addKeyboard();
 
-        this.movementSpeed = 25;
+        this.movementSpeed = 10;
+        System.out.println(this.movementSpeed);
 
         this.grid = grid;
 
@@ -50,6 +52,13 @@ public class Player implements Collideable, KeyboardHandler {
 
         this.groundedPoisition = this.grid.getHeight() - this.characterImage.getHeight();
         this.characterImage.translate(0, this.groundedPoisition);
+
+        this.weapon = WeaponFactory.createWeapon(characterImage.getX(),characterImage.getY());
+
+    }
+
+    public void revive() {
+        this.isDead = false;
     }
 
     private void addKeyboard() {
@@ -84,22 +93,28 @@ public class Player implements Collideable, KeyboardHandler {
         keyboard.addEventListener(jump);
 
         // shoot
-
+        KeyboardEvent shoot = new KeyboardEvent();
+        shoot.setKey(KeyboardEvent.KEY_SPACE);
+        shoot.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
+        keyboard.addEventListener(shoot);
     }
 
     public void show() {
         this.characterImage.draw();
+        this.weapon.show();
     }
 
     public void move(){
         if (this.isMovingRight) {
             if(this.characterImage.getMaxX() + movementSpeed <= this.grid.getWidth()) {
                 this.characterImage.translate(movementSpeed, 0);
+                this.weapon.getWeaponImage().translate(movementSpeed, 0);
             }
         }
         if (this.isMovingLeft) {
             if(this.characterImage.getX() - movementSpeed >= 0) {
                 this.characterImage.translate(-movementSpeed, 0);
+                this.weapon.getWeaponImage().translate(-movementSpeed, 0);
             }
         }
         if (this.isJumping) {
@@ -116,6 +131,7 @@ public class Player implements Collideable, KeyboardHandler {
     public void jump() {
         if (this.isComingDown) {
             this.characterImage.translate(0, this.movementSpeed);
+            this.weapon.getWeaponImage().translate(0, this.movementSpeed);
 
             if (this.characterImage.getY() >= this.groundedPoisition) {
                 // force put player in grounded position just in case
@@ -137,6 +153,7 @@ public class Player implements Collideable, KeyboardHandler {
         }
 
         this.characterImage.translate(0, -movementSpeed);
+        this.weapon.getWeaponImage().translate(0, -movementSpeed);
     }
 
 
@@ -168,6 +185,10 @@ public class Player implements Collideable, KeyboardHandler {
 
         if (key == KeyboardEvent.KEY_LEFT) {
             this.isMovingLeft = true;
+        }
+
+        if(key == KeyboardEvent.KEY_SPACE) {
+            this.weapon.shoot();
         }
 
         if (key == KeyboardEvent.KEY_UP) {
