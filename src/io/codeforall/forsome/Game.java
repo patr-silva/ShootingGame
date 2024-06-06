@@ -21,7 +21,6 @@ public class Game {
     public Game(int width, int height, int delay) {
         this.grid = new Grid(width, height);
         scoreBoard = new Text(5, 5, "");
-        healthBoard = new Text(5, 20, "");
 
         this.player = new Player(this.grid);
         this.delay = delay;
@@ -50,12 +49,6 @@ public class Game {
     public void scoreBoard() {
         scoreBoard.setText("Score: " + score);
         scoreBoard.setColor(Color.BLACK);
-
         scoreBoard.draw();
-        healthBoard.setText("Health: " + score);
-        healthBoard.setColor(Color.BLACK);
-
-        healthBoard.draw();
-
     }
 }
