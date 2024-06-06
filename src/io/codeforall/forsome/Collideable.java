@@ -1,12 +1,10 @@
 package io.codeforall.forsome;
 
-public interface Collideable {
-    boolean hasCollided = false;
+import io.codeforall.forsome.characters.Destroyable;
+import org.academiadecodigo.simplegraphics.pictures.Picture;
 
-    void setCollided();
-
-    boolean getCollided();
-
+public interface Collideable extends Destroyable {
 
     void move();
+    Picture getPicture();
 }

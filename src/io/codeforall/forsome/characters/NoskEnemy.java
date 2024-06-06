@@ -1,15 +1,12 @@
 package io.codeforall.forsome.characters;
 
-public class NoskEnemy extends Enemy{
+import io.codeforall.forsome.grid.Grid;
 
-    @Override
-    public void setCollided() {
+public class NoskEnemy extends Enemy {
 
-    }
 
-    @Override
-    public boolean getCollided() {
-        return false;
+    public NoskEnemy(int health, int speed, Grid grid) {
+        super(health, speed, grid);
     }
 
 
