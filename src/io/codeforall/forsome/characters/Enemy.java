@@ -24,6 +24,7 @@ public abstract class Enemy implements Collideable {
         this.health = health;
         this.speed = speed;
         this.grid = grid;
+        this.isDead = false;
         this.image = new Picture();
         this.image.load("src/io/codeforall/forsome/characters/images/floppagun.png");
         this.image.translate(this.getSpawnXPosition(), this.getSpawnYPosition());
@@ -52,11 +53,12 @@ public abstract class Enemy implements Collideable {
 
     public void takeDamage(int hit) {
         this.health -= hit;
-        System.out.println("Enemy health: " + this.health);
+
         if (this.health <= 0) {
-            this.isDead = true;
             Game.score += scoreIncremented;
             this.kill();
+            System.out.println(isDead);
+            System.out.println("Ai que dor");
         }
     }
 
@@ -91,7 +93,8 @@ public abstract class Enemy implements Collideable {
     }
 
     public void kill(){
-        System.out.println("Enemy killed");
+        this.isDead = true;
+        this.image.delete();
     }
 
     @Override

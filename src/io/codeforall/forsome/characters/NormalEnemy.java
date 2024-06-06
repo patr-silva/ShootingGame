@@ -12,11 +12,11 @@ public class NormalEnemy extends Enemy {
 
     @Override
     public void kill() {
-
+        super.kill();
     }
 
     @Override
     public boolean isDead() {
-        return false;
+        return super.isDead();
     }
 }

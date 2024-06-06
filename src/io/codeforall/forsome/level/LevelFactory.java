@@ -2,6 +2,7 @@ package io.codeforall.forsome.level;
 import io.codeforall.forsome.characters.Enemy;
 import io.codeforall.forsome.characters.NormalEnemy;
 import io.codeforall.forsome.characters.NoskEnemy;
+import io.codeforall.forsome.grid.Grid;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 public class LevelFactory {
@@ -76,8 +77,8 @@ public class LevelFactory {
 
         // Instanciando objetos Enemy
 
-        Enemy enemy1 = new NoskEnemy();
-        Enemy enemy2 = new NormalEnemy();
+        Enemy enemy1 = new NoskEnemy(10,new Grid(10,10),10,10);
+        Enemy enemy2 = new NormalEnemy(10,10,new Grid(10,10), false,10,10);
 
         // Criando um array d inimigos
 

@@ -1,5 +1,6 @@
 package io.codeforall.forsome;
 
+import io.codeforall.forsome.characters.Enemy;
 import io.codeforall.forsome.characters.NormalEnemy;
 import io.codeforall.forsome.characters.Player;
 import io.codeforall.forsome.grid.Grid;
@@ -11,9 +12,7 @@ import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Text;
 
-public class Game {
 public class Game implements KeyboardHandler {
-    private int score;
     private Grid grid;
     private Text scoreBoard;
     private Text healthBoard;
@@ -23,7 +22,6 @@ public class Game implements KeyboardHandler {
     private Keyboard keyboard;
 
     private Collideable enemy1;
-    private Collideable enemy2;
     private GameOverScreen gameOverScreen;
 
     public static GameState gameState;
@@ -37,15 +35,12 @@ public class Game implements KeyboardHandler {
 
         this.player = new Player(this.grid);
         this.delay = delay;
-        this.enemy1 = new NormalEnemy(50, 5, this.grid, true);
-        this.enemy2 = new NormalEnemy(50, 5, this.grid, true);
         this.gameState = GameState.INGAME;
         this.gameOverScreen = new GameOverScreen(this.grid);
         this.keyboard = new Keyboard(this);
         addKeyboard();
 
-        this.enemy1 = new NormalEnemy(50, 15, this.grid, true, 5, 10);
-        this.enemy2 = new NormalEnemy(50, 10, this.grid, true, 3, 6);
+        this.enemy1 = new NormalEnemy(1, 15, this.grid, true, 5, 10);
         CollideableManager.addCollideable(player);
         CollideableManager.addCollideable(enemy1);
 
@@ -59,9 +54,15 @@ public class Game implements KeyboardHandler {
 
         while (gameState == GameState.INGAME) {
             Thread.sleep(this.delay);
-            CollideableManager.detectCollisions();
             CollideableManager.show();
             CollideableManager.move();
+            CollideableManager.detectCollisions(this.grid);
+            this.scoreBoard();
+
+            if (score < 0) {
+                player.kill();
+                System.out.println("F Player: " + score);
+            }
 
             if(player.isDead()) {
                 gameState = GameState.GAMEOVER;
@@ -101,15 +102,18 @@ public class Game implements KeyboardHandler {
             return;
         }
 
+        gameState = GameState.INGAME;
         resetVariables();
         start();
-        gameState = GameState.INGAME;
     }
 
     private void resetVariables() {
         CollideableManager.clearCollideableList();
         this.player = new Player(this.grid);
+        score = 0;
         this.gameOverScreen.remove();
+        this.enemy1 = new NormalEnemy(1, 15, this.grid, true, 5, 10);
+        CollideableManager.addCollideable(enemy1);
     }
 
     @Override
@@ -127,12 +131,6 @@ public class Game implements KeyboardHandler {
     @Override
     public void keyReleased(KeyboardEvent keyboardEvent) {
 
-            this.scoreBoard();
-            if (score < 0) {
-                player.kill();
-                System.out.println("F Player: " + score);
-            }
-        }
     }
 
     //Create score as Text
