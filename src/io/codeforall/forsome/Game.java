@@ -8,10 +8,17 @@ import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
+import org.academiadecodigo.simplegraphics.graphics.Color;
+import org.academiadecodigo.simplegraphics.graphics.Text;
 
+public class Game {
 public class Game implements KeyboardHandler {
     private int score;
     private Grid grid;
+    private Text scoreBoard;
+    private Text healthBoard;
+
+    public static int score = 20;
     private Collideable player;
     private Keyboard keyboard;
 
@@ -26,6 +33,8 @@ public class Game implements KeyboardHandler {
 
     public Game(int width, int height, int delay) {
         this.grid = new Grid(width, height);
+        scoreBoard = new Text(5, 5, "");
+
         this.player = new Player(this.grid);
         this.delay = delay;
         this.enemy1 = new NormalEnemy(50, 5, this.grid, true);
@@ -35,6 +44,9 @@ public class Game implements KeyboardHandler {
         this.keyboard = new Keyboard(this);
         addKeyboard();
 
+        this.enemy1 = new NormalEnemy(50, 15, this.grid, true, 5, 10);
+        this.enemy2 = new NormalEnemy(50, 10, this.grid, true, 3, 6);
+        CollideableManager.addCollideable(player);
         CollideableManager.addCollideable(enemy1);
 
     }
@@ -73,7 +85,7 @@ public class Game implements KeyboardHandler {
         escape.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
         keyboard.addEventListener(escape);
 
-        
+
         KeyboardEvent startGame = new KeyboardEvent();
         startGame.setKey(KeyboardEvent.KEY_ENTER);
         startGame.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
@@ -115,5 +127,18 @@ public class Game implements KeyboardHandler {
     @Override
     public void keyReleased(KeyboardEvent keyboardEvent) {
 
+            this.scoreBoard();
+            if (score < 0) {
+                player.kill();
+                System.out.println("F Player: " + score);
+            }
+        }
+    }
+
+    //Create score as Text
+    public void scoreBoard() {
+        scoreBoard.setText("Score: " + score);
+        scoreBoard.setColor(Color.BLACK);
+        scoreBoard.draw();
     }
 }

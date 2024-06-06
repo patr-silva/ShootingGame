@@ -16,7 +16,6 @@ public class CollideableManager {
     public static void removeCollideable(Collideable collideable) {
         collideablesList.remove(collideable);
     }
-
     public static void clearCollideableList() {
         for (Collideable c : collideablesList) {
             c.getPicture().delete();
@@ -24,7 +23,6 @@ public class CollideableManager {
 
         collideablesList.clear();
     }
-
     public static void detectCollisions() {
         for(Collideable c : collideablesList) {
             // player collisions
@@ -45,9 +43,11 @@ public class CollideableManager {
             }
 
             // enemy collisions
-            if(c instanceof Enemy) {
+            if (c instanceof Enemy) {
                 if (c.getPicture().getMaxX() - c.getPicture().getWidth() / 2 <= 0) {
-                    System.out.println(collideablesList);
+                    Game.score -= ((Enemy) c).getScoreDeduction();
+                    c.getPicture().delete();
+                    removeCollideable(c);
                 }
             }
         }
