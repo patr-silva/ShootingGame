@@ -46,7 +46,7 @@ public class Player implements Collideable, KeyboardHandler {
         this.grid = grid;
 
         this.characterImage = new Picture();
-        this.characterImage.load("src/io/codeforall/forsome/characters/images/floppagun.png");
+        this.characterImage.load("src/io/codeforall/forsome/level/Images/1000005881-removebg-preview_1_-removebg-preview-removebg-preview.png");
 
         this.groundedPoisition = this.grid.getHeight() - this.characterImage.getHeight();
         this.characterImage.translate(0, this.groundedPoisition);
