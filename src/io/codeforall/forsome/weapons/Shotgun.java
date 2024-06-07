@@ -1,5 +1,6 @@
 package io.codeforall.forsome.weapons;
 
+import io.codeforall.forsome.Collideable;
 import io.codeforall.forsome.CollideableManager;
 
 public class Shotgun extends Weapon {
@@ -9,8 +10,18 @@ public class Shotgun extends Weapon {
 
     @Override
     public void shoot() {
-        CollideableManager.addCollideable(new Bullet(getSpeed(),getDamage(),getBulletImagePath(),getWeaponImage().getMaxX(),getWeaponImage().getMaxY() + 50));
-        CollideableManager.addCollideable(new Bullet(getSpeed(),getDamage(),getBulletImagePath(),getWeaponImage().getMaxX(),getWeaponImage().getMaxY()));
-        CollideableManager.addCollideable(new Bullet(getSpeed(),getDamage(),getBulletImagePath(),getWeaponImage().getMaxX(),getWeaponImage().getMaxY() - 50));
+
+        Collideable bullet1 = new Bullet(getSpeed(),getDamage(),getBulletImagePath(),getWeaponImage().getMaxX(),getWeaponImage().getMaxY() + 50);
+        bullet1.show();
+
+        Collideable bullet2 = new Bullet(getSpeed(),getDamage(),getBulletImagePath(),getWeaponImage().getMaxX(),getWeaponImage().getMaxY());
+        bullet2.show();
+
+        Collideable bullet3 = new Bullet(getSpeed(),getDamage(),getBulletImagePath(),getWeaponImage().getMaxX(),getWeaponImage().getMaxY() - 50);
+        bullet3.show();
+
+        CollideableManager.addCollideable(bullet1);
+        CollideableManager.addCollideable(bullet2);
+        CollideableManager.addCollideable(bullet3);
     }
 }

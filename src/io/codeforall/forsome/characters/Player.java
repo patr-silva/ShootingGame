@@ -48,12 +48,13 @@ public class Player implements Collideable, KeyboardHandler {
         this.grid = grid;
 
         this.characterImage = new Picture();
-        this.characterImage.load("src/io/codeforall/forsome/characters/images/floppagun.png");
+        this.characterImage.load("src/io/codeforall/forsome/characters/images/emanuel_resized.png");
 
         this.groundedPoisition = this.grid.getHeight() - this.characterImage.getHeight();
         this.characterImage.translate(0, this.groundedPoisition);
 
         this.weapon = WeaponFactory.createWeapon(characterImage.getX(),characterImage.getY());
+
 
     }
 

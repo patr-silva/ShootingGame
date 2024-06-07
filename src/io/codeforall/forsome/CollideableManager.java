@@ -3,6 +3,8 @@ package io.codeforall.forsome;
 import io.codeforall.forsome.characters.Enemy;
 import io.codeforall.forsome.characters.Player;
 import io.codeforall.forsome.grid.Grid;
+import io.codeforall.forsome.level.Level;
+import io.codeforall.forsome.level.LevelFactory;
 import io.codeforall.forsome.weapons.Bullet;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
@@ -27,7 +29,7 @@ public class CollideableManager {
 
         collideablesList.clear();
     }
-    public static void detectCollisions(Grid grid) {
+    public static void detectCollisions(Game game) {
         for(Collideable c : collideablesList) {
             if(!c.isDead()) {
                 // player collisions
@@ -40,8 +42,19 @@ public class CollideableManager {
                         }
 
                         if(other instanceof Enemy) {
-                            if(comparePositions(c,other)) {
-                                c.kill();
+                            if(!other.isDead()) {
+                                if(comparePositions(c,other)) {
+                                    c.kill();
+                                    System.out.println("fds suicidei-me?");
+                                }
+                            }
+                        }
+
+                        if(game.getLevel().getLevelEnded()) {
+                            if(c.getPicture().getMaxX() >= game.getGrid().getWidth() - c.getPicture().getWidth()) {
+                                game.setLevel(LevelFactory.createLevel(game.getGrid(),game.getLevel().getEnemySpeed() + 3, game.getLevel().getEnemySpawnInterval() - 5, game.getLevel().getScoreDeduction() + 15, game.getLevel().getScoreIncrement(), game.getLevel().getNumberOfEnemies() + 5, false));
+                                System.out.println("Novo nivel");
+                                break;
                             }
                         }
                     }
@@ -53,7 +66,7 @@ public class CollideableManager {
                     if (c.getPicture().getMaxX() - c.getPicture().getWidth() / 2 <= 0) {
                         Game.score -= ((Enemy) c).getScoreDeduction();
                         c.kill();
-                        removeCollideable(c);
+                        //removeCollideable(c);
                         continue;
                     }
 
@@ -61,9 +74,9 @@ public class CollideableManager {
 
                 // bullet collisions
                 if (c instanceof Bullet) {
-                    if (c.getPicture().getMaxX() - c.getPicture().getWidth() / 2 >= grid.getWidth()) {
+                    if (c.getPicture().getMaxX() - c.getPicture().getWidth() / 2 >= game.getGrid().getWidth()) {
                         c.kill();
-                        removeCollideable(c);
+                        //removeCollideable(c);
                     }
 
                     for(Collideable other : collideablesList) {
@@ -77,7 +90,7 @@ public class CollideableManager {
                                 System.out.println("entrou");
                                 ((Enemy) other).takeDamage(((Bullet) c).getDamage());
                                 c.kill();
-                                removeCollideable(other);
+                                //removeCollideable(other);
                                 break;
                             }
                         }

@@ -8,90 +8,99 @@ import org.academiadecodigo.simplegraphics.pictures.Picture;
 public class LevelFactory {
 
 
-    public static Level createLevel() {
-        // Instanciando objetos Picture
+    public static Level createLevel(Grid grid, int enemySpeed, int spawnInterval, int scoreDeduction, int scoreIncrement, int numberOfEnemies, boolean firstTime) {
 
-        /*
         //level 1
-        Picture backGroundstarrySky = new Picture();
-        backGroundstarrySky.load("src/io/codeforall/forsome/level/Images/Milky_Way_Stars_Sky_439498_1366x768.jpg");
-        backGroundstarrySky.translate(0, 768 - backGroundstarrySky.getHeight());
+        Picture backGroundstarrySky = new Picture(0,0,"src/io/codeforall/forsome/level/Images/level1/level1_background.jpg");
 
         Picture groundstarrySky = new Picture();
-        groundstarrySky.load("src/io/codeforall/forsome/level/Images/AdobeStock_14659835-1536x1050.jpeg.jpg");
-        groundstarrySky.translate(0,768 - groundstarrySky.getHeight());
+        groundstarrySky.load("src/io/codeforall/forsome/level/Images/level1/level1_ground.png");
+        groundstarrySky.translate(0,grid.getHeight() - groundstarrySky.getHeight());
 
         Picture portalsatrrySky = new Picture();
-        portalsatrrySky.load("src/io/codeforall/forsome/level/Images/azul_portal-removebg-preview(1).png");
-        portalsatrrySky.translate(1023,477- portalsatrrySky.getHeight() );
+        portalsatrrySky.load("src/io/codeforall/forsome/level/Images/level1/level1_portal.png");
+        portalsatrrySky.translate(grid.getWidth() - portalsatrrySky.getWidth(),grid.getHeight() - portalsatrrySky.getHeight() );
 
-*/
+
         //level 2
-        Picture backGroundmilitarUniforce = new Picture();
-        backGroundmilitarUniforce.load("src/io/codeforall/forsome/level/Images/AircraftCarrier_1920x1080_WG_SPb_WoWSL.jpg.5c4bfdfe50fccc4fb3007d9eb0ec59ed.jpg");
-        backGroundmilitarUniforce.translate(0,768 -backGroundmilitarUniforce.getHeight());
+        Picture backGroundmilitarUniforce = new Picture(0,0,"src/io/codeforall/forsome/level/Images/level2/level2_background.jpg");
 
         Picture groundmilitarUniforce = new Picture();
-        groundmilitarUniforce.load("src/io/codeforall/forsome/level/Images/the-pacific-4fd5fda25592b.jpg");
-        groundmilitarUniforce.translate(0,768-groundmilitarUniforce.getHeight());
+        groundmilitarUniforce.load("src/io/codeforall/forsome/level/Images/level2/level2_ground.jpg");
+        groundmilitarUniforce.translate(0,grid.getHeight() - groundmilitarUniforce.getHeight());
 
         Picture portalmilitarUniforce = new Picture();
-        portalmilitarUniforce.load("src/io/codeforall/forsome/level/Images/azul_portal-removebg-preview(1).png");
-        portalmilitarUniforce.translate(1023,605-portalmilitarUniforce.getHeight());
+        portalmilitarUniforce.load("src/io/codeforall/forsome/level/Images/level2/level2_portal.png");
+        portalmilitarUniforce.translate(grid.getWidth() - portalmilitarUniforce.getWidth(),grid.getHeight() - portalmilitarUniforce.getHeight());
 
-
-
-        //level
-        /*Picture backGroundseventhweek = new Picture();
-        backGroundseventhweek.load("src/io/codeforall/forsome/level/Images/Untitled-1-1920x1080-40d871ba3129e359aaab454149e03063.jpg");
-        backGroundseventhweek.translate(0,768- backGroundseventhweek.getHeight());
+        // seventh week
+        Picture backGroundseventhweek = new Picture(0,0,"src/io/codeforall/forsome/level/Images/level3/level3_background.jpg");
 
         Picture groundseventhWeek = new Picture();
-        groundseventhWeek.load("src/io/codeforall/forsome/level/Images/lava_world_wallpaper_by_teksha_art_dg5mpiw-fullview.jpg");
-        groundseventhWeek.translate(0,768- groundseventhWeek.getHeight());
+        groundseventhWeek.load("src/io/codeforall/forsome/level/Images/level3/level3_ground.jpg");
+        groundseventhWeek.translate(0,grid.getHeight() - groundseventhWeek.getHeight());
 
         Picture portalseventhWeek = new Picture();
-        portalseventhWeek.load("src/io/codeforall/forsome/level/Images/terrificante-portale-a-forma-di-bocca-in-lava-ardente-alle-porte-dell-inferno_124507-91375-removebg-preview.png");
-        portalseventhWeek.translate(950,605 - portalseventhWeek.getHeight());
+        portalseventhWeek.load("src/io/codeforall/forsome/level/Images/level3/level3_portal.png");
+        portalseventhWeek.translate(grid.getWidth() - portalseventhWeek.getWidth(),grid.getHeight() - portalseventhWeek.getHeight());
 
-         */
+        // forsome
+        Picture backGroundforSome= new Picture(0,0,"src/io/codeforall/forsome/level/Images/level4/level4_background.jpeg");
 
-/*
+        Picture groundforSome = new Picture();
+        groundforSome.load("src/io/codeforall/forsome/level/Images/level4/level4_ground.jpeg");
+        groundforSome.translate(0,grid.getHeight() - groundforSome.getHeight());
 
+        Picture portalforSome = new Picture();
+        portalforSome.load("src/io/codeforall/forsome/level/Images/level4/level4_portal.jpeg");
+        portalforSome.translate(grid.getWidth() - portalforSome.getWidth(),grid.getHeight() - portalforSome.getHeight());
 
+        //betano
 
-        /*
+        Picture backGroundBetano = new Picture(0,0,"src/io/codeforall/forsome/level/Images/level5/level5_background.jpg");
 
-        //level 4
-        Picture backGroundforSome= new Picture(0,0);
-        Picture groundforSome = new Picture(0,0);
-        Picture portalforSome = new Picture(0,0);
+        Picture groundBetano = new Picture();
+        groundBetano.load("src/io/codeforall/forsome/level/Images/level5/level5_ground.png");
+        groundBetano.translate(0,grid.getHeight() - groundBetano.getHeight());
 
-        //level 5
+        Picture portalBetano = new Picture();
+        portalBetano.load("src/io/codeforall/forsome/level/Images/level5/level5_portal.png");
+        portalBetano.translate(grid.getWidth() - portalBetano.getWidth(), grid.getHeight() - portalBetano.getHeight());
 
-        Picture backGroundhouseBetano = new Picture(0,0);
-        Picture groundhouseBetano = new Picture(0,0);
-        Picture portalhouseBetano = new Picture(0,0);
+        Level starrySky;
+        Level militarUnitforce;
+        Level seventhWeek;
+        Level forSome;
+        Level houseBetano;
 
-        */
+        if(!firstTime) {
+            starrySky = new Level(grid, backGroundstarrySky, groundstarrySky, portalsatrrySky, numberOfEnemies, enemySpeed, spawnInterval, scoreDeduction, scoreIncrement);
+            militarUnitforce = new Level(grid, backGroundmilitarUniforce, groundmilitarUniforce, portalmilitarUniforce, numberOfEnemies, enemySpeed, spawnInterval, scoreDeduction, scoreIncrement);
+            seventhWeek = new Level(grid, backGroundseventhweek, groundseventhWeek, portalseventhWeek, numberOfEnemies, enemySpeed, spawnInterval, scoreDeduction, scoreIncrement);
+            forSome= new Level(grid, backGroundforSome, groundforSome, portalforSome, numberOfEnemies, enemySpeed, spawnInterval, scoreDeduction, scoreIncrement);
+            houseBetano = new Level(grid, backGroundBetano, groundBetano, portalBetano, numberOfEnemies, enemySpeed, spawnInterval, scoreDeduction, scoreIncrement);
+        } else {
+            starrySky = new Level(grid, backGroundstarrySky, groundstarrySky, portalsatrrySky);
+            militarUnitforce = new Level(grid, backGroundmilitarUniforce, groundmilitarUniforce, portalmilitarUniforce);
+            seventhWeek = new Level(grid, backGroundseventhweek, groundseventhWeek, portalseventhWeek);
+            forSome = new Level(grid, backGroundforSome, groundforSome, portalforSome);
+            houseBetano = new Level(grid, backGroundBetano, groundBetano, portalBetano);
+        }
 
-        // Instanciando objetos Enemy
+        switch((int) Math.floor(Math.random() * 5)) {
+            case 0:
+                return starrySky;
+            case 1:
+                return militarUnitforce;
+            case 2:
+                return seventhWeek;
+            case 3:
+                return forSome;
+            case 4:
+                return houseBetano;
+        }
 
-        Enemy enemy1 = new NoskEnemy(10,new Grid(10,10),10,10);
-        Enemy enemy2 = new NormalEnemy(10,10,new Grid(10,10), false,10,10);
-
-        // Criando um array d inimigos
-
-        Enemy[] enemies = {enemy1, enemy2};
-
-
-        /*Level starrySky = new Level(backGroundstarrySky, groundstarrySky, portalsatrrySky, enemies);*/
-        Level militarUnitforce = new Level(backGroundmilitarUniforce, groundmilitarUniforce, portalmilitarUniforce, enemies);
-      /*  Level seventhWeek = new Level(backGroundseventhweek, groundseventhWeek, portalseventhWeek, enemies);
-        /*Level forSome= new Level(backGroundforSome, groundforSome, portalforSome, enemies);
-        Level houseBetano = new Level(backGroundhouseBetano, groundhouseBetano, portalhouseBetano, enemies);*/
-
-        return militarUnitforce;
+        return seventhWeek;
 
     }
 
