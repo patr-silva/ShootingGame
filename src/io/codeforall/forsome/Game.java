@@ -5,6 +5,8 @@ import io.codeforall.forsome.characters.NormalEnemy;
 import io.codeforall.forsome.characters.Player;
 import io.codeforall.forsome.grid.Grid;
 import io.codeforall.forsome.level.GameOverScreen;
+import io.codeforall.forsome.level.Level;
+import io.codeforall.forsome.level.LevelFactory;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
@@ -15,13 +17,13 @@ import org.academiadecodigo.simplegraphics.graphics.Text;
 public class Game implements KeyboardHandler {
     private Grid grid;
     private Text scoreBoard;
-    private Text healthBoard;
+
+    private Level level;
 
     public static int score = 20;
     private Collideable player;
     private Keyboard keyboard;
 
-    private Collideable enemy1;
     private GameOverScreen gameOverScreen;
 
     public static GameState gameState;
@@ -33,16 +35,17 @@ public class Game implements KeyboardHandler {
         this.grid = new Grid(width, height);
         scoreBoard = new Text(5, 5, "");
 
+        this.level = LevelFactory.createLevel(this.grid, 0,0,0,0,0, true);
+
         this.player = new Player(this.grid);
+
         this.delay = delay;
         this.gameState = GameState.INGAME;
         this.gameOverScreen = new GameOverScreen(this.grid);
         this.keyboard = new Keyboard(this);
         addKeyboard();
 
-        this.enemy1 = new NormalEnemy(1, 15, this.grid, true, 5, 10);
         CollideableManager.addCollideable(player);
-        CollideableManager.addCollideable(enemy1);
 
     }
 
@@ -52,12 +55,16 @@ public class Game implements KeyboardHandler {
 
         }
 
+        level.draw();
+        player.show();
+
         while (gameState == GameState.INGAME) {
             Thread.sleep(this.delay);
-            CollideableManager.show();
+            //CollideableManager.show();
             CollideableManager.move();
-            CollideableManager.detectCollisions(this.grid);
+            CollideableManager.detectCollisions(this);
             this.scoreBoard();
+            level.createEnemies();
 
             if (score < 0) {
                 player.kill();
@@ -96,24 +103,41 @@ public class Game implements KeyboardHandler {
 
     private void restart(boolean startMenu) throws InterruptedException  {
         if(startMenu) {
-            resetVariables();
+            resetVariables(true);
             gameState = GameState.STARTMENU;
             start();
             return;
         }
 
         gameState = GameState.INGAME;
-        resetVariables();
+        resetVariables(true);
         start();
     }
 
-    private void resetVariables() {
-        CollideableManager.clearCollideableList();
-        this.player = new Player(this.grid);
+    private void resetVariables(boolean firstLevel) {
+        setLevel(LevelFactory.createLevel(this.grid, 0,0,0,0,0, firstLevel));
         score = 0;
         this.gameOverScreen.remove();
-        this.enemy1 = new NormalEnemy(1, 15, this.grid, true, 5, 10);
-        CollideableManager.addCollideable(enemy1);
+    }
+
+    public Grid getGrid() {
+        return this.grid;
+    }
+
+    public Collideable getPlayer() {
+        return this.player;
+    }
+
+    public Level getLevel() {
+        return this.level;
+    }
+
+    public void setLevel(Level level) {
+        this.level = level;
+        level.draw();
+        CollideableManager.clearCollideableList();
+        player = new Player(grid);
+        player.show();
     }
 
     @Override

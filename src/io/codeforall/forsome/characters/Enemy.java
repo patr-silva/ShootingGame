@@ -20,13 +20,13 @@ public abstract class Enemy implements Collideable {
     private int scoreIncremented;
 
 
-    public Enemy(int health, int speed, Grid grid, int scoreDeduction, int scoreIncremented) {
+    public Enemy(int health, int speed, Grid grid, int scoreDeduction, int scoreIncremented, String imgSource) {
         this.health = health;
         this.speed = speed;
         this.grid = grid;
         this.isDead = false;
         this.image = new Picture();
-        this.image.load("src/io/codeforall/forsome/characters/images/floppagun.png");
+        this.image.load(imgSource);
         this.image.translate(this.getSpawnXPosition(), this.getSpawnYPosition());
         this.scoreDeduction = scoreDeduction;
         this.scoreIncremented = scoreIncremented;
