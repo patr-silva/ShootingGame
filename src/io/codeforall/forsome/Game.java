@@ -57,6 +57,7 @@ public class Game implements KeyboardHandler {
 
         level.draw();
         player.show();
+        Player p = (Player) this.player;
 
         while (gameState == GameState.INGAME) {
             Thread.sleep(this.delay);
@@ -65,6 +66,7 @@ public class Game implements KeyboardHandler {
             CollideableManager.detectCollisions(this);
             this.scoreBoard();
             level.createEnemies();
+            p.getWeapon().reload();
 
             if (score < 0) {
                 player.kill();
@@ -133,11 +135,17 @@ public class Game implements KeyboardHandler {
     }
 
     public void setLevel(Level level) {
+        Player p = (Player) player;
+        p.increaseSpeed();
+        p.reset();
+        //int enemies = level.getNumberOfEnemies() + 5;
+        //System.out.println("Enemy speed" + level.getEnemySpeed() + 3);
+        //System.out.println("Spawn interval: " + (level.getEnemySpawnInterval() - 5));
         this.level = level;
         level.draw();
         CollideableManager.clearCollideableList();
-        player = new Player(grid);
-        player.show();
+        p.show();
+        CollideableManager.addCollideable(p);
     }
 
     @Override

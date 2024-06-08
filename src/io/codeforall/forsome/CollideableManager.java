@@ -46,14 +46,15 @@ public class CollideableManager {
                                 if(comparePositions(c,other)) {
                                     c.kill();
                                     System.out.println("fds suicidei-me?");
+                                    break;
                                 }
                             }
                         }
 
                         if(game.getLevel().getLevelEnded()) {
                             if(c.getPicture().getMaxX() >= game.getGrid().getWidth() - c.getPicture().getWidth()) {
-                                game.setLevel(LevelFactory.createLevel(game.getGrid(),game.getLevel().getEnemySpeed() + 3, game.getLevel().getEnemySpawnInterval() - 5, game.getLevel().getScoreDeduction() + 15, game.getLevel().getScoreIncrement(), game.getLevel().getNumberOfEnemies() + 5, false));
-                                System.out.println("Novo nivel");
+                                System.out.println("Collision manager number of enemies: " + game.getLevel().getNumberOfEnemies() + 5);
+                                game.setLevel(LevelFactory.createLevel(game.getGrid(),game.getLevel().getEnemySpeed() + 4, game.getLevel().getEnemySpawnInterval() - 25, game.getLevel().getScoreDeduction() + 30, game.getLevel().getScoreIncrement(), game.getLevel().getNumberOfEnemies() + 3, false));
                                 break;
                             }
                         }
@@ -77,6 +78,7 @@ public class CollideableManager {
                     if (c.getPicture().getMaxX() - c.getPicture().getWidth() / 2 >= game.getGrid().getWidth()) {
                         c.kill();
                         //removeCollideable(c);
+                        continue;
                     }
 
                     for(Collideable other : collideablesList) {
@@ -86,12 +88,14 @@ public class CollideableManager {
                         }
 
                         if(other instanceof Enemy) {
-                            if(comparePositions(other,c)) {
-                                System.out.println("entrou");
-                                ((Enemy) other).takeDamage(((Bullet) c).getDamage());
-                                c.kill();
-                                //removeCollideable(other);
-                                break;
+                            if(!other.isDead()) {
+                                if(comparePositions(other,c)) {
+                                    System.out.println("entrou");
+                                    ((Enemy) other).takeDamage(((Bullet) c).getDamage());
+                                    c.kill();
+                                    //removeCollideable(other);
+                                    break;
+                                }
                             }
                         }
                     }

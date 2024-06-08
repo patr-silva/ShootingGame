@@ -157,6 +157,26 @@ public class Player implements Collideable, KeyboardHandler {
         this.weapon.getWeaponImage().translate(0, -movementSpeed);
     }
 
+    public void reset() {
+        this.characterImage = new Picture();
+        this.characterImage.load("src/io/codeforall/forsome/characters/images/emanuel_resized.png");
+
+        this.groundedPoisition = this.grid.getHeight() - this.characterImage.getHeight();
+        this.characterImage.translate(0, this.groundedPoisition);
+
+        this.weapon = WeaponFactory.createWeapon(characterImage.getX(),characterImage.getY());
+
+        this.isDead = false;
+    }
+
+    public Weapon getWeapon() {
+        return this.weapon;
+    }
+
+    public void increaseSpeed() {
+        this.movementSpeed = 20;
+    }
+
 
     @Override
     public void kill() {
