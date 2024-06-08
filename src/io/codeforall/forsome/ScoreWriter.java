@@ -22,7 +22,7 @@ public class ScoreWriter {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(this.fileName))) {
             writer.write(Integer.toString(score));
             writer.newLine();
-            System.out.println("Number written to file: " + score);
+            //System.out.println("Number written to file: " + score);
         } catch (IOException e) {
             System.err.println("Error writing to file: " + e.getMessage());
         }
@@ -30,14 +30,14 @@ public class ScoreWriter {
 
     public int compareScores(int newScore) {
         int existingScore = this.readScoreFromFile();
-        System.out.println("Existing number in file: " + existingScore);
+        //System.out.println("Existing number in file: " + existingScore);
 
         if (newScore > existingScore) {
-            System.out.println("New number (" + newScore + ") is greater than existing number (" + existingScore + "). Updating the file.");
+           // System.out.println("New number (" + newScore + ") is greater than existing number (" + existingScore + "). Updating the file.");
             writeScoreToFile(newScore);
             return newScore;
         } else {
-            System.out.println("New number (" + newScore + ") is not greater than existing number (" + existingScore + "). No update needed.");
+            //System.out.println("New number (" + newScore + ") is not greater than existing number (" + existingScore + "). No update needed.");
             return existingScore;
         }
     }

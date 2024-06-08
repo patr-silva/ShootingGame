@@ -178,6 +178,7 @@ public class Player implements Collideable, KeyboardHandler {
     }
 
 
+
     @Override
     public void kill() {
         this.isDead = true;

@@ -7,6 +7,7 @@ import io.codeforall.forsome.grid.Grid;
 import io.codeforall.forsome.level.GameOverScreen;
 import io.codeforall.forsome.level.Level;
 import io.codeforall.forsome.level.LevelFactory;
+import io.codeforall.forsome.level.StartScreen;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
@@ -16,10 +17,6 @@ import org.academiadecodigo.simplegraphics.graphics.Text;
 
 public class Game implements KeyboardHandler {
     private Grid grid;
-    private Text scoreBoard;
-    private Text highestScoreBoard;
-    private ScoreWriter scoreWriter = new ScoreWriter();
-    private String currentHighestScore = String.valueOf(scoreWriter.readScoreFromFile());
 
     private Level level;
 
@@ -28,6 +25,7 @@ public class Game implements KeyboardHandler {
     private Keyboard keyboard;
 
     private GameOverScreen gameOverScreen;
+    private StartScreen startScreen;
 
     public static GameState gameState;
 
@@ -36,18 +34,17 @@ public class Game implements KeyboardHandler {
 
     public Game(int width, int height, int delay) {
         this.grid = new Grid(width, height);
-        scoreBoard = new Text(5, 5, "");
-        highestScoreBoard = new Text(5, 15, this.currentHighestScore);
-        //this.highestScoreBoard.grow(50,50);
-        //this.scoreBoard.grow(50,50);
 
         this.level = LevelFactory.createLevel(this.grid, 0, 0, 0, 0, 0, true);
 
         this.player = new Player(this.grid);
 
         this.delay = delay;
-        this.gameState = GameState.INGAME;
+        this.gameState = GameState.STARTMENU;
         this.gameOverScreen = new GameOverScreen(this.grid);
+        this.startScreen = new StartScreen(this.grid);
+        this.startScreen.show();
+
         this.keyboard = new Keyboard(this);
         addKeyboard();
 
@@ -58,13 +55,17 @@ public class Game implements KeyboardHandler {
     public void start() throws InterruptedException {
         while (gameState == GameState.STARTMENU) {
             Thread.sleep(this.delay);
-
+            startScreen.show();
+            System.out.println("Estou no main menu");
+            if(gameState == GameState.INGAME) {
+                break;
+            }
         }
 
         level.draw();
+        level.scoreBoard();
+        level.highestScoreBoard();
         player.show();
-        scoreBoard();
-        highestScoreBoard();
         Player p = (Player) this.player;
 
         while (gameState == GameState.INGAME) {
@@ -72,8 +73,8 @@ public class Game implements KeyboardHandler {
             //CollideableManager.show();
             CollideableManager.move();
             CollideableManager.detectCollisions(this);
-            this.scoreBoard();
-            this.highestScoreBoard();
+            level.scoreBoard();
+            level.highestScoreBoard();
             level.createEnemies();
             p.getWeapon().reload();
 
@@ -94,11 +95,14 @@ public class Game implements KeyboardHandler {
             if (gameState == GameState.INGAME) {
                 restart(false);
             }
+
+            if(gameState == GameState.STARTMENU) {
+                restart(true);
+            }
         }
     }
 
     private void addKeyboard() {
-        // move right
         KeyboardEvent escape = new KeyboardEvent();
         escape.setKey(KeyboardEvent.KEY_ESC);
         escape.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
@@ -120,6 +124,7 @@ public class Game implements KeyboardHandler {
             return;
         }
 
+        System.out.println("entrei e não devia");
         gameState = GameState.INGAME;
         resetVariables(true);
         start();
@@ -148,12 +153,11 @@ public class Game implements KeyboardHandler {
         p.increaseSpeed();
         p.reset();
         this.level = level;
-        level.draw();
+        level.draw();level.scoreBoard();
+        level.highestScoreBoard();
         CollideableManager.clearCollideableList();
         p.show();
         CollideableManager.addCollideable(p);
-        scoreBoard();
-        highestScoreBoard();
     }
 
     @Override
@@ -164,24 +168,21 @@ public class Game implements KeyboardHandler {
             if (gameState == GameState.GAMEOVER) {
                 gameState = GameState.INGAME;
             }
+
+            if(gameState == GameState.STARTMENU) {
+                gameState = GameState.INGAME;
+            }
+        }
+
+        if(key == KeyboardEvent.KEY_ESC) {
+            if(gameState == GameState.GAMEOVER) {
+                gameState = GameState.STARTMENU;
+            }
         }
     }
 
     @Override
     public void keyReleased(KeyboardEvent keyboardEvent) {
 
-    }
-
-    public void scoreBoard() {
-        this.scoreBoard.setText("Score: " + score);
-        this.scoreBoard.setColor(Color.BLACK);
-        this.scoreBoard.draw();
-    }
-
-    public void highestScoreBoard() {
-        this.currentHighestScore = String.valueOf(this.scoreWriter.compareScores(score));
-        highestScoreBoard.setText("Highest Score: " + this.currentHighestScore);
-        highestScoreBoard.setColor(Color.BLACK);
-        highestScoreBoard.draw();
     }
 }
