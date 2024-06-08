@@ -10,6 +10,7 @@ public class LevelFactory {
 
     public static Level createLevel(Grid grid, int enemySpeed, int spawnInterval, int scoreDeduction, int scoreIncrement, int numberOfEnemies, boolean firstTime) {
 
+        System.out.println("Level factory number of enemies: " + numberOfEnemies);
         //level 1
         Picture backGroundstarrySky = new Picture(0,0,"src/io/codeforall/forsome/level/Images/level1/level1_background.jpg");
 

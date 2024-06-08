@@ -17,12 +17,13 @@ public class Level {
     private boolean levelEnded;
 
     private int numberOfEnemies;
+    private int remainingEnemies;
     private int enemySpeed;
     private int scoreDeduction;
     private int scoreIncrement;
     private int spawnInterval;
     private int spawnTimer;
-    private final double NOSK_SPAWN_RATE = 0.2;
+    private final double NOSK_SPAWN_RATE = 0.15;
 
     public Level(Grid grid, Picture backGround,Picture ground,Picture portal,int numberOfEnemies, int enemySpeed, int spawnInterval, int scoreDeduction, int scoreIncrement) {
         this.backGround = backGround;
@@ -30,11 +31,13 @@ public class Level {
         this.portal = portal;
         this.grid = grid;
         this.numberOfEnemies = numberOfEnemies;
+        this.remainingEnemies = this.numberOfEnemies;
         this.scoreIncrement = scoreIncrement;
         this.scoreDeduction = scoreDeduction;
         this.enemySpeed = enemySpeed;
         this.spawnInterval = spawnInterval;
         this.spawnTimer = spawnInterval;
+        System.out.println("Number of enemies: " + this.numberOfEnemies);
     }
 
     public Level(Grid grid, Picture backGround,Picture ground,Picture portal) {
@@ -43,6 +46,8 @@ public class Level {
         this.portal = portal;
         this.grid = grid;
         this.numberOfEnemies = 5;
+        this.remainingEnemies = this.numberOfEnemies;
+        System.out.println("Number of enemies: " + this.numberOfEnemies);
         this.scoreIncrement = 50;
         this.scoreDeduction = 20;
         this.enemySpeed = 7;
@@ -53,15 +58,16 @@ public class Level {
     public void createEnemies() {
         spawnTimer--;
 
-        if(spawnTimer <= 0 && numberOfEnemies > 0) {
-            numberOfEnemies--;
+        if(spawnTimer <= 0 && remainingEnemies > 0) {
+            remainingEnemies--;
 
-            if(numberOfEnemies<=0) {
+            if(remainingEnemies<=0) {
                 levelEnded = true;
             }
 
             if(Math.random() < NOSK_SPAWN_RATE) {
-                Collideable noskEnemy = new NoskEnemy(300,grid,scoreDeduction * 3,scoreIncrement * 4, enemySpeed / 3);
+                String source = Math.floor(Math.random() * 2) == 0 ? "src/io/codeforall/forsome/characters/images/Nozk.png" : "src/io/codeforall/forsome/characters/images/Nozk1_resized.png";
+                Collideable noskEnemy = new NoskEnemy(300,grid,scoreDeduction * 3,scoreIncrement * 4, enemySpeed / 3, source);
                 CollideableManager.addCollideable(noskEnemy);
                 noskEnemy.show();
                 spawnTimer = spawnInterval;
