@@ -17,10 +17,13 @@ import org.academiadecodigo.simplegraphics.graphics.Text;
 public class Game implements KeyboardHandler {
     private Grid grid;
     private Text scoreBoard;
+    private Text highestScoreBoard;
+    private ScoreWriter scoreWriter = new ScoreWriter();
+    private String currentHighestScore = String.valueOf(scoreWriter.readScoreFromFile());
 
     private Level level;
 
-    public static int score = 20;
+    public static int score = 0;
     private Collideable player;
     private Keyboard keyboard;
 
@@ -34,8 +37,9 @@ public class Game implements KeyboardHandler {
     public Game(int width, int height, int delay) {
         this.grid = new Grid(width, height);
         scoreBoard = new Text(5, 5, "");
+        highestScoreBoard = new Text(5, 15, this.currentHighestScore);
 
-        this.level = LevelFactory.createLevel(this.grid, 0,0,0,0,0, true);
+        this.level = LevelFactory.createLevel(this.grid, 0, 0, 0, 0, 0, true);
 
         this.player = new Player(this.grid);
 
@@ -50,7 +54,7 @@ public class Game implements KeyboardHandler {
     }
 
     public void start() throws InterruptedException {
-        while(gameState == GameState.STARTMENU) {
+        while (gameState == GameState.STARTMENU) {
             Thread.sleep(this.delay);
 
         }
@@ -65,6 +69,7 @@ public class Game implements KeyboardHandler {
             CollideableManager.move();
             CollideableManager.detectCollisions(this);
             this.scoreBoard();
+            this.highestScoreBoard();
             level.createEnemies();
             p.getWeapon().reload();
 
@@ -73,7 +78,7 @@ public class Game implements KeyboardHandler {
                 System.out.println("F Player: " + score);
             }
 
-            if(player.isDead()) {
+            if (player.isDead()) {
                 gameState = GameState.GAMEOVER;
             }
         }
@@ -82,7 +87,7 @@ public class Game implements KeyboardHandler {
             Thread.sleep(this.delay);
             this.gameOverScreen.show();
 
-            if(gameState == GameState.INGAME) {
+            if (gameState == GameState.INGAME) {
                 restart(false);
             }
         }
@@ -103,8 +108,8 @@ public class Game implements KeyboardHandler {
 
     }
 
-    private void restart(boolean startMenu) throws InterruptedException  {
-        if(startMenu) {
+    private void restart(boolean startMenu) throws InterruptedException {
+        if (startMenu) {
             resetVariables(true);
             gameState = GameState.STARTMENU;
             start();
@@ -117,7 +122,7 @@ public class Game implements KeyboardHandler {
     }
 
     private void resetVariables(boolean firstLevel) {
-        setLevel(LevelFactory.createLevel(this.grid, 0,0,0,0,0, firstLevel));
+        setLevel(LevelFactory.createLevel(this.grid, 0, 0, 0, 0, 0, firstLevel));
         score = 0;
         this.gameOverScreen.remove();
     }
@@ -152,12 +157,11 @@ public class Game implements KeyboardHandler {
     public void keyPressed(KeyboardEvent keyboardEvent) {
         int key = keyboardEvent.getKey();
 
-        if(key == KeyboardEvent.KEY_ENTER){
-            if(gameState == GameState.GAMEOVER) {
+        if (key == KeyboardEvent.KEY_ENTER) {
+            if (gameState == GameState.GAMEOVER) {
                 gameState = GameState.INGAME;
             }
         }
-
     }
 
     @Override
@@ -165,10 +169,17 @@ public class Game implements KeyboardHandler {
 
     }
 
-    //Create score as Text
     public void scoreBoard() {
-        scoreBoard.setText("Score: " + score);
-        scoreBoard.setColor(Color.BLACK);
-        scoreBoard.draw();
+        this.scoreBoard.setText("Score: " + score);
+        this.scoreBoard.grow();
+        this.scoreBoard.setColor(Color.BLACK);
+        this.scoreBoard.draw();
+    }
+
+    public void highestScoreBoard() {
+        this.currentHighestScore = String.valueOf(this.scoreWriter.compareScores(score));
+        highestScoreBoard.setText("Highest Score: " + this.currentHighestScore);
+        highestScoreBoard.setColor(Color.BLACK);
+        highestScoreBoard.draw();
     }
 }
