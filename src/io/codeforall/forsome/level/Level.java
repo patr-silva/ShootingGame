@@ -35,8 +35,15 @@ public class Level {
         this.scoreIncrement = scoreIncrement;
         this.scoreDeduction = scoreDeduction;
         this.enemySpeed = enemySpeed;
-        this.spawnInterval = spawnInterval;
-        this.spawnTimer = spawnInterval;
+
+        if(spawnInterval <= 10) {
+
+            this.spawnInterval = 10;
+        } else {
+            this.spawnInterval = spawnInterval;
+        }
+
+        this.spawnTimer = this.spawnInterval;
         System.out.println("Number of enemies: " + this.numberOfEnemies);
     }
 
@@ -52,7 +59,7 @@ public class Level {
         this.scoreDeduction = 20;
         this.enemySpeed = 7;
         this.spawnInterval = 100;
-        this.spawnTimer = spawnInterval;
+        this.spawnTimer = this.spawnInterval;
     }
 
     public void createEnemies() {

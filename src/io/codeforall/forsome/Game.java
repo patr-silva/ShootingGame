@@ -38,6 +38,8 @@ public class Game implements KeyboardHandler {
         this.grid = new Grid(width, height);
         scoreBoard = new Text(5, 5, "");
         highestScoreBoard = new Text(5, 15, this.currentHighestScore);
+        //this.highestScoreBoard.grow(50,50);
+        //this.scoreBoard.grow(50,50);
 
         this.level = LevelFactory.createLevel(this.grid, 0, 0, 0, 0, 0, true);
 
@@ -61,6 +63,8 @@ public class Game implements KeyboardHandler {
 
         level.draw();
         player.show();
+        scoreBoard();
+        highestScoreBoard();
         Player p = (Player) this.player;
 
         while (gameState == GameState.INGAME) {
@@ -143,14 +147,13 @@ public class Game implements KeyboardHandler {
         Player p = (Player) player;
         p.increaseSpeed();
         p.reset();
-        //int enemies = level.getNumberOfEnemies() + 5;
-        //System.out.println("Enemy speed" + level.getEnemySpeed() + 3);
-        //System.out.println("Spawn interval: " + (level.getEnemySpawnInterval() - 5));
         this.level = level;
         level.draw();
         CollideableManager.clearCollideableList();
         p.show();
         CollideableManager.addCollideable(p);
+        scoreBoard();
+        highestScoreBoard();
     }
 
     @Override
@@ -171,7 +174,6 @@ public class Game implements KeyboardHandler {
 
     public void scoreBoard() {
         this.scoreBoard.setText("Score: " + score);
-        this.scoreBoard.grow();
         this.scoreBoard.setColor(Color.BLACK);
         this.scoreBoard.draw();
     }
