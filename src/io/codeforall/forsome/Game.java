@@ -16,10 +16,10 @@ import org.academiadecodigo.simplegraphics.graphics.Text;
 
 public class Game implements KeyboardHandler {
     private Grid grid;
-    private Text scoreBoard;
-    private Text highestScoreBoard;
-    private ScoreWriter scoreWriter = new ScoreWriter();
-    private String currentHighestScore = String.valueOf(scoreWriter.readScoreFromFile());
+    // private Text scoreBoard;
+    // private Text highestScoreBoard;
+    //private ScoreWriter scoreWriter = new ScoreWriter();
+    //private String currentHighestScore = String.valueOf(scoreWriter.readScoreFromFile());
 
     private Level level;
 
@@ -36,8 +36,8 @@ public class Game implements KeyboardHandler {
 
     public Game(int width, int height, int delay) {
         this.grid = new Grid(width, height);
-        scoreBoard = new Text(5, 5, "");
-        highestScoreBoard = new Text(5, 15, this.currentHighestScore);
+        // this.scoreBoard = new Text(5, 5, "");
+        //this.highestScoreBoard = new Text(5, 15, this.currentHighestScore);
 
         this.level = LevelFactory.createLevel(this.grid, 0, 0, 0, 0, 0, true);
 
@@ -56,10 +56,11 @@ public class Game implements KeyboardHandler {
     public void start() throws InterruptedException {
         while (gameState == GameState.STARTMENU) {
             Thread.sleep(this.delay);
-
         }
 
         level.draw();
+        level.scoreBoard();
+        level.highestScoreBoard();
         player.show();
         Player p = (Player) this.player;
 
@@ -68,8 +69,8 @@ public class Game implements KeyboardHandler {
             //CollideableManager.show();
             CollideableManager.move();
             CollideableManager.detectCollisions(this);
-            this.scoreBoard();
-            this.highestScoreBoard();
+            level.scoreBoard();
+            level.highestScoreBoard();
             level.createEnemies();
             p.getWeapon().reload();
 
@@ -148,6 +149,8 @@ public class Game implements KeyboardHandler {
         //System.out.println("Spawn interval: " + (level.getEnemySpawnInterval() - 5));
         this.level = level;
         level.draw();
+        level.scoreBoard();
+        level.highestScoreBoard();
         CollideableManager.clearCollideableList();
         p.show();
         CollideableManager.addCollideable(p);
@@ -168,7 +171,7 @@ public class Game implements KeyboardHandler {
     public void keyReleased(KeyboardEvent keyboardEvent) {
 
     }
-
+/*
     public void scoreBoard() {
         this.scoreBoard.setText("Score: " + score);
         this.scoreBoard.grow();
@@ -182,4 +185,6 @@ public class Game implements KeyboardHandler {
         highestScoreBoard.setColor(Color.BLACK);
         highestScoreBoard.draw();
     }
+
+ */
 }
