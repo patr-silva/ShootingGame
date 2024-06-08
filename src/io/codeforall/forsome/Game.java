@@ -35,7 +35,7 @@ public class Game implements KeyboardHandler {
     public Game(int width, int height, int delay) {
         this.grid = new Grid(width, height);
         scoreBoard = new Text(5, 5, "");
-        highestScoreBoard = new Text(15, 15, this.currentHighestScore);
+        highestScoreBoard = new Text(5, 15, this.currentHighestScore);
 
         this.level = LevelFactory.createLevel(this.grid, 0, 0, 0, 0, 0, true);
 
@@ -161,6 +161,7 @@ public class Game implements KeyboardHandler {
 
     public void scoreBoard() {
         this.scoreBoard.setText("Score: " + score);
+        this.scoreBoard.grow();
         this.scoreBoard.setColor(Color.BLACK);
         this.scoreBoard.draw();
     }
