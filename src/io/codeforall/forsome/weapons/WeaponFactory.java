@@ -3,19 +3,17 @@ package io.codeforall.forsome.weapons;
 public class WeaponFactory {
 
     public static Weapon createWeapon(int playerPosX, int playerPosY) {
-        Shotgun shotgun = new Shotgun(playerPosX, playerPosY);
-        MachineGun machineGun = new MachineGun(playerPosX, playerPosY);
-        Grenade grenade = new Grenade(playerPosX, playerPosY);
 
         switch((int) Math.floor(Math.random() * 3)) {
             case 0:
-                return shotgun;
+                return new Shotgun(playerPosX, playerPosY);
             case 1:
-                return machineGun;
+                return new MachineGun(playerPosX, playerPosY);
             case 2:
-                return grenade;
+                return new Grenade(playerPosX, playerPosY);
             default:
-                return shotgun;
+                return new Grenade(playerPosX, playerPosY);
+
         }
     }
 }

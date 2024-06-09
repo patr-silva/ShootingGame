@@ -5,7 +5,7 @@ import io.codeforall.forsome.CollideableManager;
 
 public class MachineGun extends Weapon{
     public MachineGun(int playerPosX, int playerPosY) {
-        super(40, 0.2,"src/io/codeforall/forsome/weapons/images/Banana_resized.png",10, "src/io/codeforall/forsome/weapons/images/Banana_resized.png", playerPosX, playerPosY, 7);
+        super(40, 0.2,"Banana_resized.png",14, "Banana_resized.png", playerPosX, playerPosY, 5);
     }
 
     @Override

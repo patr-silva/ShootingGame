@@ -32,7 +32,7 @@ public class Level {
     private int scoreIncrement;
     private int spawnInterval;
     private int spawnTimer;
-    private final double NOSK_SPAWN_RATE = 0.15;
+    private final double NOSK_SPAWN_RATE = 0.09;
 
 
     public Level(Grid grid, Picture backGround, Picture ground, Picture portal, int numberOfEnemies, int enemySpeed, int spawnInterval, int scoreDeduction, int scoreIncrement) {
@@ -46,15 +46,15 @@ public class Level {
         this.scoreDeduction = scoreDeduction;
         this.enemySpeed = enemySpeed;
 
-        if(spawnInterval <= 10) {
+        if(spawnInterval <= 25) {
 
-            this.spawnInterval = 10;
+            this.spawnInterval = 25;
         } else {
             this.spawnInterval = spawnInterval;
         }
 
         this.spawnTimer = this.spawnInterval;
-        System.out.println("Number of enemies: " + this.numberOfEnemies);
+        //System.out.println("Number of enemies: " + this.numberOfEnemies);
 
         this.scoreBoard = new Text(5, 5, "");
         this.highestScoreBoard = new Text(5, 20, this.currentHighestScore);
@@ -68,7 +68,7 @@ public class Level {
         this.grid = grid;
         this.numberOfEnemies = 5;
         this.remainingEnemies = this.numberOfEnemies;
-        System.out.println("Number of enemies: " + this.numberOfEnemies);
+       // System.out.println("Number of enemies: " + this.numberOfEnemies);
         this.scoreIncrement = 100;
         this.scoreDeduction = 100;
         this.enemySpeed = 7;
@@ -90,7 +90,7 @@ public class Level {
             }
 
             if (Math.random() < NOSK_SPAWN_RATE) {
-                String source = Math.floor(Math.random() * 2) == 0 ? "src/io/codeforall/forsome/characters/images/Nozk.png" : "src/io/codeforall/forsome/characters/images/Nozk1_resized.png";
+                String source = Math.floor(Math.random() * 2) == 0 ? "Nozk.png" : "Nozk1_resized.png";
                 Collideable noskEnemy = new NoskEnemy(300, grid, scoreDeduction * 3, scoreIncrement * 4, enemySpeed / 3, source);
                 CollideableManager.addCollideable(noskEnemy);
                 noskEnemy.show();

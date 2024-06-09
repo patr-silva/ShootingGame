@@ -13,10 +13,11 @@ public class StartScreen {
 
     public StartScreen(Grid grid) {
         this.grid = grid;
-        this.background = new Picture(0,0,"io/codeforall/forsome/level/Images/Menu Backgroung.jpg");
+        this.background = new Picture(0,0,"Menu Backgroung.jpg");
     }
 
     public void show() {
+        System.out.println("entrei");
         ScoreWriter scoreWriter = new ScoreWriter();
         int hScore = scoreWriter.readScoreFromFile();
 
@@ -28,7 +29,8 @@ public class StartScreen {
     }
 
     public void remove() {
-        background.delete();
-        highScore.delete();
+        System.out.println("apaga fdp");
+        this.background.delete();
+        this.highScore.delete();
     }
 }

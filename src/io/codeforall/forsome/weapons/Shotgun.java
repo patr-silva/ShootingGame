@@ -5,7 +5,7 @@ import io.codeforall.forsome.CollideableManager;
 
 public class Shotgun extends Weapon {
     public Shotgun(int playerPosX, int playerPosY) {
-        super(50, 1,"src/io/codeforall/forsome/weapons/images/Shotgun blast__cropped_resized.png", 10, "src/io/codeforall/forsome/weapons/images/Shotgun_resized 2.png", playerPosX, playerPosY, 30);
+        super(45, 1,"Shotgun blast__cropped_resized.png", 14, "Shotgun_resized 2.png", playerPosX, playerPosY, 30);
     }
 
     @Override

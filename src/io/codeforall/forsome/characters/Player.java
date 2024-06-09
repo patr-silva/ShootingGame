@@ -42,13 +42,13 @@ public class Player implements Collideable, KeyboardHandler {
         CollideableManager.addCollideable(this);
         addKeyboard();
 
-        this.movementSpeed = 10;
+        this.movementSpeed = 11;
         System.out.println(this.movementSpeed);
 
         this.grid = grid;
 
         this.characterImage = new Picture();
-        this.characterImage.load("src/io/codeforall/forsome/characters/images/emanuel_resized.png");
+        this.characterImage.load("emanuel_resized.png");
 
         this.groundedPoisition = this.grid.getHeight() - this.characterImage.getHeight();
         this.characterImage.translate(0, this.groundedPoisition);
@@ -159,7 +159,7 @@ public class Player implements Collideable, KeyboardHandler {
 
     public void reset() {
         this.characterImage = new Picture();
-        this.characterImage.load("src/io/codeforall/forsome/characters/images/emanuel_resized.png");
+        this.characterImage.load("emanuel_resized.png");
 
         this.groundedPoisition = this.grid.getHeight() - this.characterImage.getHeight();
         this.characterImage.translate(0, this.groundedPoisition);
@@ -174,7 +174,7 @@ public class Player implements Collideable, KeyboardHandler {
     }
 
     public void increaseSpeed() {
-        this.movementSpeed = 20;
+        this.movementSpeed = 21;
     }
 
 

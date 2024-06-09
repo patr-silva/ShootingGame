@@ -52,56 +52,71 @@ public class Game implements KeyboardHandler {
 
     }
 
-    public void start() throws InterruptedException {
-        while (gameState == GameState.STARTMENU) {
-            Thread.sleep(this.delay);
-            startScreen.show();
-            //System.out.println("Estou no main menu");
-            if(gameState == GameState.INGAME) {
-                break;
-            }
-        }
-
-        level.draw();
-        level.scoreBoard();
-        level.highestScoreBoard();
-        player.show();
-        Player p = (Player) this.player;
-
-        while (gameState == GameState.INGAME) {
-            Thread.sleep(this.delay);
-            //CollideableManager.show();
-            CollideableManager.move();
-            CollideableManager.detectCollisions(this);
-            level.scoreBoard();
-            level.highestScoreBoard();
-            level.createEnemies();
-            p.getWeapon().reload();
-
-            if (score < 0) {
-                player.kill();
-                //System.out.println("F Player: " + score);
-            }
-
-            if (player.isDead()) {
-                gameState = GameState.GAMEOVER;
-            }
-        }
-
-        while (gameState == GameState.GAMEOVER) {
-            Thread.sleep(this.delay);
-            this.gameOverScreen.show();
-
-            if (gameState == GameState.INGAME) {
-                restart(false);
-                break;
-            }
+    public void start() {
+        while (true){
 
             if(gameState == GameState.STARTMENU) {
-                restart(true);
-                break;
+                startScreen.show();
             }
+
+            while (gameState == GameState.STARTMENU) {
+                try {
+                    Thread.sleep(this.delay);
+                } catch (InterruptedException e) {
+                    System.out.println("fodeu");
+                }
+
+            }
+
+            level.draw();
+            level.scoreBoard();
+            level.highestScoreBoard();
+            player.show();
+            Player p = (Player) this.player;
+
+            while (gameState == GameState.INGAME) {
+
+                try {
+                    Thread.sleep(this.delay);
+                } catch (InterruptedException e) {
+                    System.out.println("fodeu");
+                }
+                //CollideableManager.show();
+                CollideableManager.move();
+                CollideableManager.detectCollisions(this);
+                try {
+
+                    level.scoreBoard();
+                    level.highestScoreBoard();
+                } catch (Exception e) {
+                    System.out.println("fodeu");
+                }
+                level.createEnemies();
+                p.getWeapon().reload();
+
+                if (score < 0) {
+                    player.kill();
+                    //System.out.println("F Player: " + score);
+                }
+
+                if (player.isDead()) {
+                    gameState = GameState.GAMEOVER;
+                }
+            }
+
+            this.gameOverScreen.show();
+
+            while (gameState == GameState.GAMEOVER) {
+                try {
+                    Thread.sleep(this.delay);
+                } catch (InterruptedException e) {
+                    System.out.println("fodeu");
+                }
+            }
+
+            gameOverScreen.remove();
         }
+
     }
 
     private void addKeyboard() {
@@ -118,22 +133,18 @@ public class Game implements KeyboardHandler {
 
     }
 
-    private void restart(boolean startMenu) throws InterruptedException {
+    private void restart(boolean startMenu) {
         if (startMenu) {
-            resetVariables(true);
-            gameState = GameState.STARTMENU;
-            start();
+            resetVariables();
             return;
         }
 
         System.out.println("entrei e não devia");
-        gameState = GameState.INGAME;
-        resetVariables(true);
-        start();
+        resetVariables();
     }
 
-    private void resetVariables(boolean firstLevel) {
-        setLevel(LevelFactory.createLevel(this.grid, 0, 0, 0, 0, 0, firstLevel));
+    private void resetVariables() {
+        setLevel(LevelFactory.createLevel(this.grid, 0, 0, 0, 0, 0, true));
         score = 0;
         this.gameOverScreen.remove();
     }
@@ -155,7 +166,8 @@ public class Game implements KeyboardHandler {
         p.increaseSpeed();
         p.reset();
         this.level = level;
-        level.draw();level.scoreBoard();
+        level.draw();
+        level.scoreBoard();
         level.highestScoreBoard();
         CollideableManager.clearCollideableList();
         p.show();
@@ -168,16 +180,19 @@ public class Game implements KeyboardHandler {
 
         if (key == KeyboardEvent.KEY_ENTER) {
             if (gameState == GameState.GAMEOVER) {
+                restart(false);
                 gameState = GameState.INGAME;
             }
 
             if(gameState == GameState.STARTMENU) {
                 gameState = GameState.INGAME;
+                startScreen.remove();
             }
         }
 
         if(key == KeyboardEvent.KEY_ESC) {
             if(gameState == GameState.GAMEOVER) {
+                restart(true);
                 gameState = GameState.STARTMENU;
             }
         }
