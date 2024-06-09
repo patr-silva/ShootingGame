@@ -9,6 +9,7 @@ import io.codeforall.forsome.weapons.Bullet;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 import java.util.LinkedList;
+import java.util.SortedMap;
 
 public class CollideableManager {
     private static LinkedList<Collideable> collideablesList = new LinkedList<>();
@@ -117,9 +118,15 @@ public class CollideableManager {
     public static void move() {
         for(Collideable c : collideablesList) {
             if (!c.isDead()) {
-                c.move();
+                try {
+                    c.move();
+                } catch (Exception e ) {
+                    System.out.println("fodeu");
+                }
+
             }
         }
+
     }
 
     private static boolean comparePositions(Collideable target, Collideable invader) {

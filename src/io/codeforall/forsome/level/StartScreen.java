@@ -13,7 +13,7 @@ public class StartScreen {
 
     public StartScreen(Grid grid) {
         this.grid = grid;
-        this.background = new Picture(0,0,"src/io/codeforall/forsome/level/Images/Menu Backgroung.jpg");
+        this.background = new Picture(0,0,"io/codeforall/forsome/level/Images/Menu Backgroung.jpg");
     }
 
     public void show() {

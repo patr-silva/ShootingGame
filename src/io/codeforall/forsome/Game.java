@@ -56,7 +56,7 @@ public class Game implements KeyboardHandler {
         while (gameState == GameState.STARTMENU) {
             Thread.sleep(this.delay);
             startScreen.show();
-            System.out.println("Estou no main menu");
+            //System.out.println("Estou no main menu");
             if(gameState == GameState.INGAME) {
                 break;
             }
@@ -80,7 +80,7 @@ public class Game implements KeyboardHandler {
 
             if (score < 0) {
                 player.kill();
-                System.out.println("F Player: " + score);
+                //System.out.println("F Player: " + score);
             }
 
             if (player.isDead()) {
@@ -94,10 +94,12 @@ public class Game implements KeyboardHandler {
 
             if (gameState == GameState.INGAME) {
                 restart(false);
+                break;
             }
 
             if(gameState == GameState.STARTMENU) {
                 restart(true);
+                break;
             }
         }
     }
