@@ -10,99 +10,152 @@ public class LevelFactory {
 
     public static Level createLevel(Grid grid, int enemySpeed, int spawnInterval, int scoreDeduction, int scoreIncrement, int numberOfEnemies, boolean firstTime) {
 
-        System.out.println("Level factory number of enemies: " + numberOfEnemies);
-        //level 1
-        Picture backGroundstarrySky = new Picture(0,0,"src/io/codeforall/forsome/level/Images/level1/level1_background.jpg");
-
-        Picture groundstarrySky = new Picture();
-        groundstarrySky.load("src/io/codeforall/forsome/level/Images/level1/level1_ground.png");
-        groundstarrySky.translate(0,grid.getHeight() - groundstarrySky.getHeight());
-
-        Picture portalsatrrySky = new Picture();
-        portalsatrrySky.load("src/io/codeforall/forsome/level/Images/level1/level1_portal.png");
-        portalsatrrySky.translate(grid.getWidth() - portalsatrrySky.getWidth(),grid.getHeight() - portalsatrrySky.getHeight() );
-
-
-        //level 2
-        Picture backGroundmilitarUniforce = new Picture(0,0,"src/io/codeforall/forsome/level/Images/level2/level2_background.jpg");
-
-        Picture groundmilitarUniforce = new Picture();
-        groundmilitarUniforce.load("src/io/codeforall/forsome/level/Images/level2/level2_ground.jpg");
-        groundmilitarUniforce.translate(0,grid.getHeight() - groundmilitarUniforce.getHeight());
-
-        Picture portalmilitarUniforce = new Picture();
-        portalmilitarUniforce.load("src/io/codeforall/forsome/level/Images/level2/level2_portal.png");
-        portalmilitarUniforce.translate(grid.getWidth() - portalmilitarUniforce.getWidth(),grid.getHeight() - portalmilitarUniforce.getHeight());
-
-        // seventh week
-        Picture backGroundseventhweek = new Picture(0,0,"src/io/codeforall/forsome/level/Images/level3/level3_background.jpg");
-
-        Picture groundseventhWeek = new Picture();
-        groundseventhWeek.load("src/io/codeforall/forsome/level/Images/level3/level3_ground.jpg");
-        groundseventhWeek.translate(0,grid.getHeight() - groundseventhWeek.getHeight());
-
-        Picture portalseventhWeek = new Picture();
-        portalseventhWeek.load("src/io/codeforall/forsome/level/Images/level3/level3_portal.png");
-        portalseventhWeek.translate(grid.getWidth() - portalseventhWeek.getWidth(),grid.getHeight() - portalseventhWeek.getHeight());
-
-        // forsome
-        Picture backGroundforSome= new Picture(0,0,"src/io/codeforall/forsome/level/Images/level4/level4_background.jpeg");
-
-        Picture groundforSome = new Picture();
-        groundforSome.load("src/io/codeforall/forsome/level/Images/level4/level4_ground.jpeg");
-        groundforSome.translate(0,grid.getHeight() - groundforSome.getHeight());
-
-        Picture portalforSome = new Picture();
-        portalforSome.load("src/io/codeforall/forsome/level/Images/level4/level4_portal.jpeg");
-        portalforSome.translate(grid.getWidth() - portalforSome.getWidth(),grid.getHeight() - portalforSome.getHeight());
-
-        //betano
-
-        Picture backGroundBetano = new Picture(0,0,"src/io/codeforall/forsome/level/Images/level5/level5_background.jpg");
-
-        Picture groundBetano = new Picture();
-        groundBetano.load("src/io/codeforall/forsome/level/Images/level5/level5_ground.png");
-        groundBetano.translate(0,grid.getHeight() - groundBetano.getHeight());
-
-        Picture portalBetano = new Picture();
-        portalBetano.load("src/io/codeforall/forsome/level/Images/level5/level5_portal.png");
-        portalBetano.translate(grid.getWidth() - portalBetano.getWidth(), grid.getHeight() - portalBetano.getHeight());
-
-        Level starrySky;
-        Level militarUnitforce;
-        Level seventhWeek;
-        Level forSome;
-        Level houseBetano;
+        int randomNumber = (int) Math.floor(Math.random() * 5);
 
         if(!firstTime) {
-            starrySky = new Level(grid, backGroundstarrySky, groundstarrySky, portalsatrrySky, numberOfEnemies, enemySpeed, spawnInterval, scoreDeduction, scoreIncrement);
-            militarUnitforce = new Level(grid, backGroundmilitarUniforce, groundmilitarUniforce, portalmilitarUniforce, numberOfEnemies, enemySpeed, spawnInterval, scoreDeduction, scoreIncrement);
-            seventhWeek = new Level(grid, backGroundseventhweek, groundseventhWeek, portalseventhWeek, numberOfEnemies, enemySpeed, spawnInterval, scoreDeduction, scoreIncrement);
-            forSome= new Level(grid, backGroundforSome, groundforSome, portalforSome, numberOfEnemies, enemySpeed, spawnInterval, scoreDeduction, scoreIncrement);
-            houseBetano = new Level(grid, backGroundBetano, groundBetano, portalBetano, numberOfEnemies, enemySpeed, spawnInterval, scoreDeduction, scoreIncrement);
+
+            switch (randomNumber) {
+                case 0:
+                    //level 1
+                    Picture backGroundstarrySky = new Picture(0,0,"level1_background.jpg");
+
+                    Picture groundstarrySky = new Picture();
+                    groundstarrySky.load("level1_ground.png");
+                    groundstarrySky.translate(0,grid.getHeight() - groundstarrySky.getHeight());
+
+                    Picture portalsatrrySky = new Picture();
+                    portalsatrrySky.load("level1_portal.png");
+                    portalsatrrySky.translate(grid.getWidth() - portalsatrrySky.getWidth(),grid.getHeight() - portalsatrrySky.getHeight() );
+
+                    return new Level(grid, backGroundstarrySky, groundstarrySky, portalsatrrySky, numberOfEnemies, enemySpeed, spawnInterval, scoreDeduction, scoreIncrement);
+
+                case 1:
+                    //level 2
+                    Picture backGroundmilitarUniforce = new Picture(0,0,"level2_background.jpg");
+
+                    Picture groundmilitarUniforce = new Picture();
+                    groundmilitarUniforce.load("level2_ground.jpg");
+                    groundmilitarUniforce.translate(0,grid.getHeight() - groundmilitarUniforce.getHeight());
+
+                    Picture portalmilitarUniforce = new Picture();
+                    portalmilitarUniforce.load("level2_portal.png");
+                    portalmilitarUniforce.translate(grid.getWidth() - portalmilitarUniforce.getWidth(),grid.getHeight() - portalmilitarUniforce.getHeight());
+
+
+                    return new Level(grid, backGroundmilitarUniforce, groundmilitarUniforce, portalmilitarUniforce, numberOfEnemies, enemySpeed, spawnInterval, scoreDeduction, scoreIncrement);
+                case 2:
+                    // seventh week
+                    Picture backGroundseventhweek = new Picture(0,0,"level3_background.jpg");
+
+                    Picture groundseventhWeek = new Picture();
+                    groundseventhWeek.load("level3_ground.jpg");
+                    groundseventhWeek.translate(0,grid.getHeight() - groundseventhWeek.getHeight());
+
+                    Picture portalseventhWeek = new Picture();
+                    portalseventhWeek.load("level3_portal.png");
+                    portalseventhWeek.translate(grid.getWidth() - portalseventhWeek.getWidth(),grid.getHeight() - portalseventhWeek.getHeight());
+
+                    return new Level(grid, backGroundseventhweek, groundseventhWeek, portalseventhWeek, numberOfEnemies, enemySpeed, spawnInterval, scoreDeduction, scoreIncrement);
+                case 3:
+                    Picture backGroundforSome= new Picture(0,0,"level4_background.jpeg");
+
+                    Picture groundforSome = new Picture();
+                    groundforSome.load("level4_ground.jpeg");
+                    groundforSome.translate(0,grid.getHeight() - groundforSome.getHeight());
+
+                    Picture portalforSome = new Picture();
+                    portalforSome.load("level4_portal.jpeg");
+                    portalforSome.translate(grid.getWidth() - portalforSome.getWidth(),grid.getHeight() - portalforSome.getHeight());
+
+                    return new Level(grid, backGroundforSome, groundforSome, portalforSome, numberOfEnemies, enemySpeed, spawnInterval, scoreDeduction, scoreIncrement);
+                case 4:
+                    Picture backGroundBetano = new Picture(0,0,"level5_background.jpg");
+
+                    Picture groundBetano = new Picture();
+                    groundBetano.load("level5_ground.png");
+                    groundBetano.translate(0,grid.getHeight() - groundBetano.getHeight());
+
+                    Picture portalBetano = new Picture();
+                    portalBetano.load("level5_portal.png");
+                    portalBetano.translate(grid.getWidth() - portalBetano.getWidth(), grid.getHeight() - portalBetano.getHeight());
+
+                    return new Level(grid, backGroundBetano, groundBetano, portalBetano, numberOfEnemies, enemySpeed, spawnInterval, scoreDeduction, scoreIncrement);
+            }
+
+
         } else {
-            starrySky = new Level(grid, backGroundstarrySky, groundstarrySky, portalsatrrySky);
-            militarUnitforce = new Level(grid, backGroundmilitarUniforce, groundmilitarUniforce, portalmilitarUniforce);
-            seventhWeek = new Level(grid, backGroundseventhweek, groundseventhWeek, portalseventhWeek);
-            forSome = new Level(grid, backGroundforSome, groundforSome, portalforSome);
-            houseBetano = new Level(grid, backGroundBetano, groundBetano, portalBetano);
+            switch (randomNumber) {
+                case 0:
+                    //level 1
+                    Picture backGroundstarrySky = new Picture(0,0,"level1_background.jpg");
+
+                    Picture groundstarrySky = new Picture();
+                    groundstarrySky.load("level1_ground.png");
+                    groundstarrySky.translate(0,grid.getHeight() - groundstarrySky.getHeight());
+
+                    Picture portalsatrrySky = new Picture();
+                    portalsatrrySky.load("level1_portal.png");
+                    portalsatrrySky.translate(grid.getWidth() - portalsatrrySky.getWidth(),grid.getHeight() - portalsatrrySky.getHeight() );
+
+
+                    return new Level(grid, backGroundstarrySky, groundstarrySky, portalsatrrySky);
+                case 1:
+                    //level 2
+                    Picture backGroundmilitarUniforce = new Picture(0,0,"level2_background.jpg");
+
+                    Picture groundmilitarUniforce = new Picture();
+                    groundmilitarUniforce.load("level2_ground.jpg");
+                    groundmilitarUniforce.translate(0,grid.getHeight() - groundmilitarUniforce.getHeight());
+
+                    Picture portalmilitarUniforce = new Picture();
+                    portalmilitarUniforce.load("level2_portal.png");
+                    portalmilitarUniforce.translate(grid.getWidth() - portalmilitarUniforce.getWidth(),grid.getHeight() - portalmilitarUniforce.getHeight());
+
+
+                    return new Level(grid, backGroundmilitarUniforce, groundmilitarUniforce, portalmilitarUniforce);
+                case 2:
+                    // seventh week
+                    Picture backGroundseventhweek = new Picture(0,0,"level3_background.jpg");
+
+                    Picture groundseventhWeek = new Picture();
+                    groundseventhWeek.load("level3_ground.jpg");
+                    groundseventhWeek.translate(0,grid.getHeight() - groundseventhWeek.getHeight());
+
+                    Picture portalseventhWeek = new Picture();
+                    portalseventhWeek.load("level3_portal.png");
+                    portalseventhWeek.translate(grid.getWidth() - portalseventhWeek.getWidth(),grid.getHeight() - portalseventhWeek.getHeight());
+
+
+                    return new Level(grid, backGroundseventhweek, groundseventhWeek, portalseventhWeek);
+                case 3:
+                    Picture backGroundforSome= new Picture(0,0,"level4_background.jpeg");
+
+                    Picture groundforSome = new Picture();
+                    groundforSome.load("level4_ground.jpeg");
+                    groundforSome.translate(0,grid.getHeight() - groundforSome.getHeight());
+
+                    Picture portalforSome = new Picture();
+                    portalforSome.load("level4_portal.jpeg");
+                    portalforSome.translate(grid.getWidth() - portalforSome.getWidth(),grid.getHeight() - portalforSome.getHeight());
+
+
+                    return new Level(grid, backGroundforSome, groundforSome, portalforSome);
+                case 4:
+                    Picture backGroundBetano = new Picture(0,0,"level5_background.jpg");
+
+                    Picture groundBetano = new Picture();
+                    groundBetano.load("level5_ground.png");
+                    groundBetano.translate(0,grid.getHeight() - groundBetano.getHeight());
+
+                    Picture portalBetano = new Picture();
+                    portalBetano.load("level5_portal.png");
+                    portalBetano.translate(grid.getWidth() - portalBetano.getWidth(), grid.getHeight() - portalBetano.getHeight());
+
+
+                    return new Level(grid, backGroundBetano, groundBetano, portalBetano);
+            }
         }
-
-        switch((int) Math.floor(Math.random() * 5)) {
-            case 0:
-                return starrySky;
-            case 1:
-                return militarUnitforce;
-            case 2:
-                return seventhWeek;
-            case 3:
-                return forSome;
-            case 4:
-                return houseBetano;
-        }
-
-        return seventhWeek;
-
+        return null;
     }
 
 

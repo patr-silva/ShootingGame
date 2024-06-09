@@ -55,7 +55,7 @@ public class CollideableManager {
                         if(game.getLevel().getLevelEnded()) {
                             if(c.getPicture().getMaxX() >= game.getGrid().getWidth() - c.getPicture().getWidth()) {
                                 System.out.println("Collision manager number of enemies: " + game.getLevel().getNumberOfEnemies() + 5);
-                                game.setLevel(LevelFactory.createLevel(game.getGrid(),game.getLevel().getEnemySpeed() + 4, game.getLevel().getEnemySpawnInterval() - 25, game.getLevel().getScoreDeduction() + 30, game.getLevel().getScoreIncrement(), game.getLevel().getNumberOfEnemies() + 3, false));
+                                game.setLevel(LevelFactory.createLevel(game.getGrid(),game.getLevel().getEnemySpeed() + 3, game.getLevel().getEnemySpawnInterval() - 25, game.getLevel().getScoreDeduction() + 30, game.getLevel().getScoreIncrement(), game.getLevel().getNumberOfEnemies() + 3, false));
                                 break;
                             }
                         }
@@ -76,7 +76,7 @@ public class CollideableManager {
 
                 // bullet collisions
                 if (c instanceof Bullet) {
-                    if (c.getPicture().getMaxX() - c.getPicture().getWidth() / 2 >= game.getGrid().getWidth()) {
+                    if (c.getPicture().getMaxX() >= game.getGrid().getWidth() - c.getPicture().getWidth()) {
                         c.kill();
                         //removeCollideable(c);
                         continue;
@@ -116,16 +116,16 @@ public class CollideableManager {
     }
 
     public static void move() {
-        for(Collideable c : collideablesList) {
-            if (!c.isDead()) {
-                try {
+        try {
+            for(Collideable c : collideablesList) {
+                if (!c.isDead()) {
                     c.move();
-                } catch (Exception e ) {
-                    System.out.println("fodeu");
                 }
-
             }
+        } catch (Exception e) {
+            System.out.println("fodeu");
         }
+
 
     }
 

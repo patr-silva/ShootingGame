@@ -17,7 +17,7 @@ public class GameOverScreen {
 
     public GameOverScreen(Grid grid) {
         this.grid = grid;
-        this.background = new Picture(0,0,"src/io/codeforall/forsome/level/Images/Gameover background.jpeg");
+        this.background = new Picture(0,0,"Gameover background.jpeg");
         //this.text = new Text(grid.getWidth() / 2,grid.getHeight() / 2,"Game Over");
         //this.text.grow(250,100);
         //this.text.setColor(Color.RED);
