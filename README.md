@@ -8,7 +8,9 @@ Call of Emanuel is an action-packed game created using Java and the SimpleGFX li
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-Call of Emanuel is a fast-paced action game developed during a four-week bootcamp using Java and the SimpleGFX library. Players assume the role of a valiant hero battling against waves of mischievous Floppa cat adversaries. Armed with holy water grenades and banana blasters, players must navigate intense challenges and ultimately confront the formidable NOSK boss.
+Call of Emanuel is a fast-paced action game developed during the fourth week of the Code for All_ bootcamp using Java and the SimpleGFX library.
+
+Players assume the role of a valiant hero battling against waves of mischievous Floppa cat adversaries. Armed with holy water grenades and banana blasters, players must navigate intense challenges and ultimately confront the formidable NOSK boss.
 
 ## Built With
 
