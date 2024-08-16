@@ -1,5 +1,3 @@
-<!-- PROJECT LOGO -->
-<br />
 <div align="center">
 <h1 align="center">Call of Emanuel 🪖</h1>
 <p align="center">
@@ -18,13 +16,12 @@ Call of Emanuel is a fast-paced action game developed during a four-week bootcam
 *  SimpleGFX
 
 
-## Acknowledgement
- This project was a team effort by
- 
-* Henrique Celeste;
-* Patrícia Silva;
-* Emanuel Matos; 
-* Armando Coutinho.
+## Authors
+
+- [Henrique Celeste](https://github.com/TaBByR)
+- [Patrícia Silva](https://www.github.com/patr-silva)
+- [Emanuel Matos](https://www.github.com/filipematos1982)
+- [Armando Coutinho](https://github.com/ArmandoCoutinho)
 
 ## Installation
 
@@ -38,9 +35,13 @@ Call of Emanuel is a fast-paced action game developed during a four-week bootcam
       ```sh
    java -jar build/CallOfEmanuel.jar
    ```
-<p align="right">(<a href="#readme-top">Back to top</a>)</p>
 
+## How to Play
 
+### Controls
+* **Movement:** Left & Right Arrow Keys;
+* **Jump:** Up Arrow Key;
+* **Attack:** Space bar;
 
 <!-- USAGE EXAMPLES -->
 ## Screenshots
